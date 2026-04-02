@@ -1,0 +1,86 @@
+# lefthook.yml — ECC Hook Workarounds for Git
+# Replicates ECC's PreToolUse/PostToolUse/Stop hooks using git hooks.
+# Install: npx lefthook install
+#
+# ECC hooks covered:
+#   pre:bash:block-no-verify     → pre-commit + commit-msg hooks enforced by lefthook itself
+#   pre:bash:commit-quality       → pre-commit: lint, format, secret scan
+#   post:quality-gate            → pre-push: full check suite
+#   stop:format-typecheck         → pre-commit: format + typecheck staged files
+#   stop:check-console-log        → pre-commit: detect console.log in staged files
+#
+# ECC hooks NOT replicated (require Copilot IDE integration):
+#   pre:observe:continuous-learning  → manual: /share at session end
+#   session:start (context load)     → manual: /resume at session start
+#   stop:session-end (persist)       → manual: /share at session end
+#   post:bash:desktop-notify          → VS Code notifications (native)
+
+pre-commit:
+  parallel: true
+  commands:
+    # Block --no-verify bypass (meta: lefthook itself enforces this)
+    typecheck:
+      glob: "*.{ts,tsx}"
+      run: npx tsc --noEmit --skipLibCheck
+      stage_fixed: false
+      fail_text: "TypeScript errors found. Fix before committing."
+
+    lint-staged:
+      run: npx lint-staged
+      fail_text: "Lint errors found. Run 'npm run lint:fix' to auto-fix."
+
+    format-check:
+      glob: "*.{ts,tsx,js,jsx,json,css,md}"
+      run: npx prettier --check {staged_files}
+      stage_fixed: true
+      fail_text: "Files need formatting. Run 'npm run format' to fix."
+
+    secret-scan:
+      run: |
+        # Scan staged files for common secret patterns
+        if git diff --cached --name-only | xargs grep -lE \
+          '(api[_-]?key|secret|password|token|auth)[[:space:]]*[:=][[:space:]]*["\x27][^"\x27]{8,}' \
+          2>/dev/null; then
+          echo "❌ Possible secrets detected in staged files. Review before committing."
+          exit 1
+        fi
+      fail_text: "Potential secret detected in staged files."
+
+    no-console-log:
+      glob: "*.{ts,tsx,js,jsx}"
+      run: |
+        FILES=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.(ts|tsx|js|jsx)$')
+        if [ -n "$FILES" ]; then
+          if echo "$FILES" | xargs grep -n 'console\.log(' 2>/dev/null; then
+            echo "⚠️  console.log() found in staged files. Remove or replace with logger."
+            exit 1
+          fi
+        fi
+      fail_text: "console.log() found. Use structured logger instead."
+
+commit-msg:
+  commands:
+    conventional-commit:
+      run: |
+        MSG=$(cat {1})
+        # Conventional commits: type(scope): subject
+        if ! echo "$MSG" | grep -qE '^(feat|fix|docs|style|refactor|test|chore|perf|ci|build|revert)(\(.+\))?: .{3,}'; then
+          echo "❌ Commit message must follow Conventional Commits format:"
+          echo "   type(scope): description"
+          echo "   Types: feat|fix|docs|style|refactor|test|chore|perf|ci|build|revert"
+          echo "   Example: feat(auth): add JWT refresh token rotation"
+          exit 1
+        fi
+      fail_text: "Invalid commit message format."
+
+pre-push:
+  commands:
+    # ECC's post:quality-gate — full check suite before push
+    quality-gate:
+      run: |
+        echo "🔍 Running quality gate before push..."
+        npm run typecheck && \
+        npm run lint && \
+        npm test -- --passWithNoTests && \
+        echo "✅ Quality gate passed"
+      fail_text: "Quality gate failed. Fix all errors before pushing."

@@ -1,0 +1,7 @@
+name: ecc-copilot
+version: 1.9.0
+description: Everything Claude Code (ECC) ported to GitHub Copilot — proactive agents, TDD-first workflow, 11 top skills, hook workarounds via lefthook.
+target: copilot
+
+dependencies:
+  apm: []
