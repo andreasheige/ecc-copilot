@@ -143,3 +143,46 @@ When appending to `learnings/*.md`:
 - Create the session folder at pipeline start: `.github/pipeline-artifacts/sessions/<YYYY-MM-DD-task-slug>/`
 - Write `00-scope.md` as your first artifact
 - After pipeline completes, write a final summary appended to the session folder
+
+## Memory Storage Progression
+
+The learning system evolves with project maturity. Every agent MUST check the current tier and act accordingly.
+
+### How to detect the current tier
+
+| Check | Result | Tier |
+|-------|--------|------|
+| `learnings/*.md` files exist and are < 200 lines each | Yes | **Tier 1 — Markdown** |
+| Any `learnings/*.md` exceeds 200 lines | Yes | **Trigger Tier 2 migration** |
+| `learnings/*.jsonl` files exist | Yes | **Tier 2 — JSONL** |
+| Any `learnings/*.jsonl` exceeds 500 entries | Yes | **Trigger Tier 3 migration** |
+
+### Tier 1 — Markdown (current)
+
+- Store learnings as `### Title — YYYY-MM-DD` entries in `learnings/*.md`
+- Agents read the full file on start
+- Simple, diffable, reviewable in PRs
+
+### Tier 2 — Structured JSONL
+
+**Trigger**: Any `learnings/*.md` file exceeds 200 lines.
+
+**Migration action** (performed by the agent that detects the threshold):
+1. Convert entries to JSONL: `{"date":"YYYY-MM-DD","domain":"security","title":"...","body":"...","source_agent":"...","session":"..."}`
+2. Write to `learnings/<domain>.jsonl` alongside the existing `.md`
+3. Keep the `.md` as a human-readable summary (top 20 most impactful learnings)
+4. Future agents write to `.jsonl` and update the `.md` summary only for high-severity items
+
+**Read pattern**: Agents read the slim `.md` summary first. If the current task matches a domain, also grep the `.jsonl` for relevant keywords.
+
+### Tier 3 — Semantic / Vector (future)
+
+**Trigger**: Any `learnings/*.jsonl` exceeds 500 entries.
+
+**Migration action**:
+1. Propose a RAG-based retrieval skill in `.github/skills/learning-retrieval/`
+2. Embed all JSONL entries into a vector store (technology TBD based on project stack)
+3. Agents query by semantic similarity instead of reading full files
+4. The `.md` summaries remain as fallback for agents without vector access
+
+**Do NOT implement Tier 3 speculatively** — only when the 500-entry threshold is hit and an engineer confirms the approach.
