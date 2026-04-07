@@ -10,29 +10,68 @@ Every agent in the pipeline MUST follow this protocol to collect artifacts and i
 > The orchestrator (architect) MUST embed the artifact and logging requirements into every subagent prompt.
 > See the "Subagent Prompt Template" section below for the required boilerplate.
 
+## ⛔ Orchestrator Hard Rule (No Exceptions)
+
+The architect agent MUST create the session folder and `00-scope.md` as its **very first tool calls** — before reading any source file, before writing any code, before dispatching any subagent.
+
+**Enforcement checklist** (run mentally at start of every task):
+- [ ] `mkdir -p .github/pipeline-artifacts/sessions/<YYYY-MM-DD-username-task-slug>/` — done?
+- [ ] `00-scope.md` written? — done?
+- [ ] `agent-log.jsonl` created with `start` entry? — done?
+- [ ] `architecture.md` learnings read? — done?
+
+If any box is unchecked → do it now before proceeding.
+
+Skipping is a protocol violation. There are no "small task" exemptions.
+
+## Two-Tier Storage Model (Multi-Developer)
+
+This repo is used by 15+ developers simultaneously. Artifacts are split into two tiers to eliminate conflicts:
+
+| Tier | Path | Git tracked? | Purpose |
+|---|---|---|---|
+| **Sessions** | `.github/pipeline-artifacts/sessions/` | ❌ `.gitignore`d | Per-developer, per-task scratch space. Never committed. |
+| **Learnings** | `.github/pipeline-artifacts/learnings/` | ✅ Committed | Shared team knowledge base. Commit after each task. |
+
+**Sessions are local-only** — they exist only on the developer's machine during and after the session. They are never pushed, never cause merge conflicts, and never pollute PRs.
+
+**Learnings are shared** — after completing a task, the architect appends extracted insights to the relevant `learnings/*.md` file and includes that change in the PR.
+
+### Session Folder Naming
+
+To prevent the rare collision where two developers work on the same JIRA ticket on the same day, session folders MUST include the developer's git username:
+
+```
+.github/pipeline-artifacts/sessions/<YYYY-MM-DD>-<git-username>-<task-slug>/
+```
+
+**Example**: `2026-04-07-aheige-pbcde-15050-tealium-guest-bpid/`
+
+Get the git username with: `git config user.name | tr ' ' '-' | tr '[:upper:]' '[:lower:]'`
+
 ## Directory Structure
 
 ```
 .github/pipeline-artifacts/
-  sessions/
-    <YYYY-MM-DD-task-slug>/     # One folder per pipeline run
-      00-scope.md                # architect output
-      01-analysis.md             # analyser output
-      01-work-items.md           # work-item-creator output
-      02-<agent-name>.md         # each dev agent's report
-      03-code-quality.md         # review gate
-      03-security.md             # review gate
-      04-qa-<type>.md            # QA gate reports
-      05-deploy.md               # deploy report
-  learnings/
-    code-quality.md              # Patterns from code reviews
-    security.md                  # Common security issues found
-    architecture.md              # Architectural decisions & patterns
-    testing.md                   # Testing gaps & patterns
-    performance.md               # Performance patterns & budgets
-    frontend.md                  # Frontend patterns & pitfalls
-    backend.md                   # Backend patterns & pitfalls
-    general.md                   # Cross-cutting learnings
+  sessions/                           ← .gitignored (local only)
+    <YYYY-MM-DD>-<user>-<task-slug>/  # One folder per developer per run
+      00-scope.md                      # architect output
+      01-analysis.md                   # analyser output
+      01-work-items.md                 # work-item-creator output
+      02-<agent-name>.md               # each dev agent's report
+      03-code-quality.md               # review gate
+      03-security.md                   # review gate
+      04-qa-<type>.md                  # QA gate reports
+      05-deploy.md                     # deploy report
+  learnings/                          ← committed, shared across team
+    code-quality.md                    # Patterns from code reviews
+    security.md                        # Common security issues found
+    architecture.md                    # Architectural decisions & patterns
+    testing.md                         # Testing gaps & patterns
+    performance.md                     # Performance patterns & budgets
+    frontend.md                        # Frontend patterns & pitfalls
+    backend.md                         # Backend patterns & pitfalls
+    general.md                         # Cross-cutting learnings
 ```
 
 ## Invocation Logging
