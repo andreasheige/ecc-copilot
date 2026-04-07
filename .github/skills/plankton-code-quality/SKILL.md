@@ -1,7 +1,6 @@
 ---
 name: plankton-code-quality
 description: "Write-time code quality enforcement using Plankton — auto-formatting, linting, and AI-powered fixes on every file edit via git hooks."
-origin: community
 ---
 
 # Plankton Code Quality Skill
