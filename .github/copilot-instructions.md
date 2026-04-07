@@ -14,6 +14,7 @@ This project uses a full multi-stage agent pipeline. See `.github/agents/` for a
 | 3 — Review (both must PASS) | `code-quality-reviewer`, `security-reviewer` | After all dev agents complete |
 | 4 — QA (all must PASS) | `qa-functional`, `qa-integration-e2e`, `qa-performance`, `qa-automation-runner`, `contract-testing` | After review gates pass |
 | 5 — Deploy | `devsecops-deploy` | After all QA gates pass |
+| 6 — Report | `session-reporter` | End of pipeline (auto-spawned by architect) |
 
 ## Core Behavioral Rules
 

@@ -17,6 +17,7 @@ On receiving a task:
 4. **Review** — Spawn `code-quality-reviewer` AND `security-reviewer`. BOTH must return PASS before proceeding.
 5. **QA** — Spawn all QA agents in parallel. ALL must return PASS.
 6. **Deploy** — Spawn `devsecops-deploy`. Only after all gates pass.
+7. **Report** — Spawn `session-reporter` to compile the session summary (agents used, timing, cost estimates, gate results).
 
 ## Stage 2 Agent Selection
 

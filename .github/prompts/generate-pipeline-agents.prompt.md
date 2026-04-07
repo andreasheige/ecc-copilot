@@ -230,6 +230,18 @@ All QA agents run in parallel. All must pass.
 
 ---
 
+### Stage 6 — REPORT
+
+#### `session-reporter`
+
+- **Role**: End-of-pipeline session reporter — compiles a summary dashboard of the entire pipeline run.
+- **Focus**: Read all session artifacts → tally agents invoked, models used, stage durations, tool call counts, gate verdicts → produce a Markdown dashboard with per-agent breakdown, cost-by-model summary, stage timeline, and gate results.
+- **Key behavior**: Auto-spawned by `architect` as the final pipeline step. Read-only — never modifies source code.
+- **Model**: `["Claude Sonnet 4.5", "Claude Sonnet 4"]`
+- **Tools**: `[read, edit, search]` (edit for writing the summary artifact only)
+
+---
+
 ## Inter-Agent Handoff Protocol
 
 Every agent must include a `## Handoff` section in its body that specifies:
@@ -264,6 +276,8 @@ User Request
  qa-automation-runner, contract-testing] — all must PASS
     ↓
 [devsecops-deploy] — deploy
+    ↓
+[session-reporter] — compile session summary
 ```
 
 ## Generation Instructions

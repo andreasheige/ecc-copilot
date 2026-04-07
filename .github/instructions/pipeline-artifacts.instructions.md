@@ -49,8 +49,14 @@ Every agent in the pipeline MUST follow this protocol to collect artifacts and i
 
 **Session**: <session-folder-name>
 **Date**: <YYYY-MM-DD>
+**Agent**: <agent-name>
+**Model**: <model used, e.g. "Claude Sonnet 4.5">
+**Stage**: <0-5>
 **Status**: PASS | FAIL | BLOCKED
-**Duration context**: <brief note on scope>
+**Started**: <HH:MM>
+**Finished**: <HH:MM>
+**Duration**: <e.g. "3 min" or "~45 sec">
+**Tool calls**: <approximate count of tool invocations>
 
 ## Summary
 
