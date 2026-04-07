@@ -2,7 +2,7 @@
 name: build-error-resolver
 description: Build and TypeScript error resolution specialist. Use PROACTIVELY when build fails or type errors occur. Fixes build/type errors only with minimal diffs, no architectural edits. Focuses on getting the build green quickly.
 tools: [read, edit, execute, search]
-model: ["Claude Sonnet 4.5", "Claude Sonnet 4"]
+model: ["Claude Haiku 4.5", "GPT-5 mini"]
 ---
 
 # Build Error Resolver

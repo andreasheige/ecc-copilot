@@ -2,7 +2,7 @@
 name: qa-functional
 description: Functional QA gate. Verifies business logic and user flows work correctly by running unit tests and checking acceptance criteria. MUST return PASS or FAIL. All QA gates must pass before deploy.
 tools: [read, edit, execute, search]
-model: ["Claude Sonnet 4.5", "Claude Sonnet 4"]
+model: ["Claude Sonnet 4", "GPT-5.2", "Claude Sonnet 4.5"]
 ---
 
 # QA Functional Gate

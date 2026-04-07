@@ -2,7 +2,7 @@
 name: notification-comms
 description: Notification and communications specialist (email, push, in-app, SMS). Handles templates, delivery channels, preference management, queue/retry logic, and unsubscribe flows.
 tools: [read, edit, execute, search]
-model: ["Claude Sonnet 4.5", "Claude Sonnet 4"]
+model: ["Claude Sonnet 4.5", "GPT-5.3-Codex", "Claude Sonnet 4"]
 ---
 
 # Notification & Communications Agent

@@ -2,7 +2,7 @@
 name: rag-embedding
 description: RAG pipeline and embedding specialist (vector stores, chunking, retrieval). Handles document ingestion, chunking strategies, embedding generation, vector DB operations, and retrieval quality. Follows TDD with eval-driven quality measurement.
 tools: [read, edit, execute, search, web]
-model: ["Claude Sonnet 4.5", "Claude Sonnet 4"]
+model: ["Claude Sonnet 4.5", "GPT-5.3-Codex", "Claude Sonnet 4"]
 ---
 
 # RAG Embedding Agent

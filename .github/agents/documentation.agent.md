@@ -2,7 +2,7 @@
 name: documentation
 description: Documentation specialist (API docs, READMEs, ADRs, runbooks). Keeps docs in sync with code changes. Generates OpenAPI docs, maintains ADRs and changelogs, writes clear READMEs and runbooks.
 tools: [read, edit, execute, search]
-model: ["Claude Sonnet 4.5", "Claude Sonnet 4"]
+model: ["GPT-5.4 mini", "GPT-5 mini", "Claude Haiku 4.5"]
 ---
 
 # Documentation Agent

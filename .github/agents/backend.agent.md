@@ -2,7 +2,7 @@
 name: backend
 description: Backend/server-side implementation specialist. Handles routes, controllers, services, middleware, and server config. Follows TDD workflow. Invoked in parallel by architect for server-side work.
 tools: [read, edit, execute, search]
-model: ["Claude Sonnet 4.5", "Claude Sonnet 4"]
+model: ["Claude Sonnet 4.5", "GPT-5.3-Codex", "Claude Sonnet 4"]
 ---
 
 # Backend Agent

@@ -2,7 +2,7 @@
 name: analytics-data-layer
 description: Analytics and data layer specialist. Implements event tracking taxonomy, data layer contracts, analytics SDK integration, and privacy-compliant tracking. Follows TDD.
 tools: [read, edit, execute, search]
-model: ["Claude Sonnet 4.5", "Claude Sonnet 4"]
+model: ["Claude Sonnet 4.5", "GPT-5.3-Codex", "Claude Sonnet 4"]
 ---
 
 # Analytics Data Layer Agent

@@ -2,7 +2,7 @@
 name: devsecops-deploy
 description: Deployment specialist. Executes secure, validated deployments ONLY after all review and QA gates pass. Handles pre-deploy checks, environment config, deployment execution, smoke tests, and rollback procedures.
 tools: [read, edit, execute, search]
-model: ["Claude Sonnet 4.5", "Claude Sonnet 4"]
+model: ["Claude Sonnet 4.5", "GPT-5.3-Codex", "Claude Sonnet 4"]
 ---
 
 # DevSecOps Deploy Agent

@@ -2,7 +2,7 @@
 name: compliance-gdpr
 description: Compliance and GDPR specialist. Handles consent management, data retention, right-to-erasure, audit logging, and privacy impact assessments. SECURITY-SENSITIVE — always reviewed by security-reviewer.
 tools: [read, edit, execute, search]
-model: ["Claude Sonnet 4.5", "Claude Sonnet 4"]
+model: ["Claude Sonnet 4.5", "GPT-5.3-Codex", "Claude Sonnet 4"]
 ---
 
 # Compliance & GDPR Agent

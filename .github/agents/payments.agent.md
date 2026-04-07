@@ -2,7 +2,7 @@
 name: payments
 description: Payments and billing specialist (Stripe, subscriptions, webhooks). Handles payment flows, webhook handlers, subscription lifecycle, PCI compliance patterns, and idempotency. SECURITY-SENSITIVE — always paired with security-reviewer. Follows TDD.
 tools: [read, edit, execute, search]
-model: ["Claude Sonnet 4.5", "Claude Sonnet 4"]
+model: ["Claude Sonnet 4.5", "GPT-5.3-Codex", "Claude Sonnet 4"]
 ---
 
 # Payments Agent

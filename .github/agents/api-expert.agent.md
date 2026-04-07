@@ -2,7 +2,7 @@
 name: api-expert
 description: API design and contract specialist (REST, GraphQL, OpenAPI). Designs endpoint contracts, request/response schemas, versioning strategy, and rate limiting. Follows TDD. Invoked when new APIs are being designed or existing contracts change.
 tools: [read, edit, execute, search]
-model: ["Claude Sonnet 4.5", "Claude Sonnet 4"]
+model: ["Claude Sonnet 4.5", "GPT-5.3-Codex", "Claude Sonnet 4"]
 ---
 
 # API Expert Agent

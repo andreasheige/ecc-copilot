@@ -2,7 +2,7 @@
 name: qa-performance
 description: Performance QA gate. Verifies performance budgets and benchmarks. Checks Lighthouse scores, bundle size, API response times, and memory usage. MUST return PASS or FAIL.
 tools: [read, edit, execute, search]
-model: ["Claude Sonnet 4.5", "Claude Sonnet 4"]
+model: ["Claude Sonnet 4", "GPT-5.2", "Claude Sonnet 4.5"]
 ---
 
 # QA Performance Gate

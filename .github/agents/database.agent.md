@@ -2,7 +2,7 @@
 name: database
 description: Database design and query specialist (PostgreSQL, Redis, migrations). Handles schema design, migrations, indexes, query optimization, and data integrity. Follows TDD. Invoked for any schema or data layer changes.
 tools: [read, edit, execute, search]
-model: ["Claude Sonnet 4.5", "Claude Sonnet 4"]
+model: ["Claude Sonnet 4.5", "GPT-5.3-Codex", "Claude Sonnet 4"]
 ---
 
 # Database Agent

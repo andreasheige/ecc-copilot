@@ -2,7 +2,7 @@
 name: localization
 description: Localization and internationalization specialist (i18n, l10n). Handles translation key management, locale detection, date/number/currency formatting, RTL support, and translation workflows.
 tools: [read, edit, execute, search]
-model: ["Claude Sonnet 4.5", "Claude Sonnet 4"]
+model: ["Claude Sonnet 4.5", "GPT-5.3-Codex", "Claude Sonnet 4"]
 ---
 
 # Localization Agent

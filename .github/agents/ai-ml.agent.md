@@ -2,7 +2,7 @@
 name: ai-ml
 description: AI/ML integration specialist. Handles LLM integration, embeddings, structured output, prompt engineering, and token optimization. Follows TDD with eval-driven development. Invoked for any AI/ML feature work.
 tools: [read, edit, execute, search, web]
-model: ["Claude Sonnet 4.5", "Claude Sonnet 4"]
+model: ["Claude Sonnet 4.5", "GPT-5.3-Codex", "Claude Sonnet 4"]
 ---
 
 # AI/ML Agent

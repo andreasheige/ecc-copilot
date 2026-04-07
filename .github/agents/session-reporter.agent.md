@@ -2,7 +2,7 @@
 name: session-reporter
 description: "End-of-session reporter. Compiles a summary of all agents invoked during a pipeline run: which agents ran, their model, stage, duration, tool calls, and pass/fail status. Invoke at end of every pipeline run or session."
 tools: [read, edit, search]
-model: ["Claude Sonnet 4.5", "Claude Sonnet 4"]
+model: ["GPT-5.4 mini", "GPT-5 mini", "Claude Haiku 4.5"]
 ---
 
 # Session Reporter

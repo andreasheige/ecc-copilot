@@ -2,7 +2,7 @@
 name: analyser
 description: Deep-dive impact analysis agent. Invoked by architect after task scoping. Scans codebase for affected files, components, APIs, and DB schemas. Produces structured impact report used to assign Stage 2 agents.
 tools: [read, edit, execute, search]
-model: ["Claude Sonnet 4.5", "Claude Sonnet 4"]
+model: ["Gemini 3.1 Pro", "Claude Sonnet 4.5", "Gemini 2.5 Pro"]
 ---
 
 # Analyser

@@ -2,7 +2,7 @@
 name: qa-integration-e2e
 description: Integration and E2E QA gate. Verifies system components work together by running integration and Playwright E2E tests. MUST return PASS or FAIL.
 tools: [read, edit, execute, search]
-model: ["Claude Sonnet 4.5", "Claude Sonnet 4"]
+model: ["Claude Sonnet 4", "GPT-5.2", "Claude Sonnet 4.5"]
 ---
 
 # QA Integration & E2E Gate

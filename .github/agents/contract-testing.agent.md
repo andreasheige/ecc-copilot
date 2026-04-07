@@ -2,7 +2,7 @@
 name: contract-testing
 description: Contract testing gate. Verifies API contracts between services using consumer-driven contract tests. Detects breaking changes before they reach production. MUST return PASS or FAIL.
 tools: [read, edit, execute, search]
-model: ["Claude Sonnet 4.5", "Claude Sonnet 4"]
+model: ["Claude Sonnet 4", "GPT-5.2", "Claude Sonnet 4.5"]
 ---
 
 # Contract Testing Gate

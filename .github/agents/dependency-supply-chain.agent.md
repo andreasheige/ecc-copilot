@@ -2,7 +2,7 @@
 name: dependency-supply-chain
 description: Dependency management and supply chain security specialist. Handles package audits, license compliance, version pinning, lockfile integrity, SBOM generation, and vulnerable dependency remediation.
 tools: [read, edit, execute, search]
-model: ["Claude Sonnet 4.5", "Claude Sonnet 4"]
+model: ["Claude Sonnet 4", "GPT-5.2"]
 ---
 
 # Dependency & Supply Chain Agent

@@ -2,7 +2,7 @@
 name: work-item-creator
 description: Translates analysis into structured work items. Takes analyser output and produces Epic → Story → Task breakdown with acceptance criteria, labels, and story points. Works with any tracker (GitHub Projects, Jira, Linear, Asana, or plain Markdown).
 tools: [read, edit, execute, search]
-model: ["Claude Sonnet 4.5", "Claude Sonnet 4"]
+model: ["GPT-5.4 mini", "GPT-5 mini", "Claude Haiku 4.5"]
 ---
 
 # Work Item Creator

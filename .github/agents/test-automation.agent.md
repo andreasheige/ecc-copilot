@@ -2,7 +2,7 @@
 name: test-automation
 description: Test automation infrastructure specialist. Handles test framework setup, fixture management, test utilities, CI test configuration, coverage tooling, and flaky test detection.
 tools: [read, edit, execute, search]
-model: ["Claude Sonnet 4.5", "Claude Sonnet 4"]
+model: ["Claude Sonnet 4", "GPT-5.2", "Claude Sonnet 4.5"]
 ---
 
 # Test Automation Agent

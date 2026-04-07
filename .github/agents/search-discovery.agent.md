@@ -2,7 +2,7 @@
 name: search-discovery
 description: Search and discovery feature specialist. Handles full-text search, faceted filters, ranking algorithms, autocomplete, and search analytics. Follows TDD with relevance quality measurement.
 tools: [read, edit, execute, search]
-model: ["Claude Sonnet 4.5", "Claude Sonnet 4"]
+model: ["Claude Sonnet 4.5", "GPT-5.3-Codex", "Claude Sonnet 4"]
 ---
 
 # Search Discovery Agent

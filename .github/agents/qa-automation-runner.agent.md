@@ -2,7 +2,7 @@
 name: qa-automation-runner
 description: QA automation orchestrator. Runs the full test suite, collects coverage reports, aggregates results from all QA agents, and produces the final QA report. MUST return overall PASS or FAIL.
 tools: [read, edit, execute, search]
-model: ["Claude Sonnet 4.5", "Claude Sonnet 4"]
+model: ["Claude Sonnet 4", "GPT-5.2", "Claude Sonnet 4.5"]
 ---
 
 # QA Automation Runner

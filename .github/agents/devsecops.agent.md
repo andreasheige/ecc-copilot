@@ -2,7 +2,7 @@
 name: devsecops
 description: DevSecOps specialist for CI/CD pipelines, infrastructure-as-code, and security automation. Handles GitHub Actions, Docker, Terraform, secret scanning, SAST/DAST. Follows TDD for pipeline changes.
 tools: [read, edit, execute, search]
-model: ["Claude Sonnet 4.5", "Claude Sonnet 4"]
+model: ["Claude Sonnet 4.5", "GPT-5.3-Codex", "Claude Sonnet 4"]
 ---
 
 # DevSecOps Agent

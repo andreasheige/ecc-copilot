@@ -2,7 +2,7 @@
 name: frontend
 description: Frontend implementation specialist (React, Next.js, Tailwind, accessibility). Handles components, pages, hooks, client-side state, responsive design, and a11y. Follows TDD workflow. Invoked in parallel by architect for UI work.
 tools: [read, edit, execute, search]
-model: ["Claude Sonnet 4.5", "Claude Sonnet 4"]
+model: ["Claude Sonnet 4.5", "GPT-5.3-Codex", "Claude Sonnet 4"]
 ---
 
 # Frontend Agent
