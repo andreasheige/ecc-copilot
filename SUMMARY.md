@@ -1,7 +1,7 @@
 # ECC → GitHub Copilot: Complete Summary
 
 > **Scope:** Everything Claude Code (ECC) v1.9.0 investigation + full port to GitHub Copilot  
-> **Output:** `ecc-copilot` APM package — installs 8 agents, 11 skills, 1 behavioral instruction set, and git hooks
+> **Output:** `ecc-copilot` APM package — installs 35 agents (7-stage pipeline), 13 skills, 3 instruction sets (including multi-vendor model matrix), pipeline artifacts with invocation logging, and git hooks
 
 ---
 
@@ -206,38 +206,58 @@ npm install -D lefthook && npx lefthook install
 
 ### What Gets Installed
 
-**Instructions (1 file → `.github/instructions/`)**
+**Instructions (3 files → `.github/instructions/`)**
 
-- `ecc-core.instructions.md` — the behavioral core: proactive agent dispatch table, TDD enforcement, security rules, planning requirements, mode usage, session habits, prohibited patterns, parallel execution
+| File | Scope | Purpose |
+|------|-------|---------|
+| `ecc-core.instructions.md` | `**` | Core behavioral rules: agent-first, TDD-first, security, quality standards |
+| `model-selection.instructions.md` | `**` | Multi-vendor model matrix, plan-based availability, multi-model review protocol |
+| `pipeline-artifacts.instructions.md` | `.github/agents/**` | Artifact collection, invocation logging (JSONL), memory progression tiers |
 
-**Agents (8 files → `.github/agents/`)**
+**Agents (35 files → `.github/agents/`)** — organized as a 7-stage pipeline:
 
-| Agent                  | Auto-invoked when                      |
-| ---------------------- | -------------------------------------- |
-| `planner`              | Complex feature request (>1 file)      |
-| `architect`            | Architectural decision needed          |
-| `code-reviewer`        | Code just written or modified          |
-| `tdd-guide`            | New feature or bug fix                 |
-| `security-reviewer`    | Auth, payments, PII, new API endpoints |
-| `build-error-resolver` | Build or type error                    |
-| `refactor-cleaner`     | Dead code or large refactor            |
-| `doc-updater`          | Documentation needs updating           |
+| Stage | Agents | Purpose |
+|-------|--------|---------|
+| 0 — Orchestration | `architect`, `planner` | Pipeline entry point, task scoping, planning |
+| 1 — Analysis | `analyser`, `work-item-creator` | Impact analysis, Epic → Story → Task breakdown |
+| 2 — Development | `frontend`, `backend`, `api-expert`, `database`, `ai-ml`, `payments`, `rag-embedding`, `devsecops`, `search-discovery`, `notification-comms`, `analytics-data-layer`, `compliance-gdpr`, `localization`, `dependency-supply-chain` | Parallel domain specialists |
+| 3 — Review Gates | `code-reviewer`, `code-quality-reviewer`, `security-reviewer` | Multi-model parallel reviews (3–5 models). PASS/FAIL gates |
+| 4 — QA Gates | `qa-functional`, `qa-integration-e2e`, `qa-performance`, `qa-automation-runner`, `contract-testing` | All must PASS before deploy |
+| 5 — Deploy | `devsecops-deploy` | Deployment execution, smoke tests, rollback |
+| 6 — Report | `session-reporter` | Cost/timing dashboard from agent-log.jsonl |
+| Utility | `tdd-guide`, `build-error-resolver`, `refactor-cleaner`, `doc-updater`, `documentation`, `test-automation`, `code-reviewer` | Auto-invoked by context |
 
-**Skills (11 directories → `.github/skills/`)**
+**Multi-model review protocol**: Code reviews dispatch parallel agents with different models (Sonnet 4.5 + GPT-5.3-Codex + Gemini 3.1 Pro minimum). Findings tagged `[UNANIMOUS]`, `[MAJORITY]`, or `[SINGLE:<model>]`.
 
-| Skill                           | Purpose                                            |
+**Skills (13 directories → `.github/skills/`)**
+
+| Skill | Purpose |
 | ------------------------------- | -------------------------------------------------- |
-| `tdd-workflow`                  | Red → Green → Refactor with examples               |
-| `blueprint`                     | Feature planning before coding                     |
-| `api-design`                    | REST/GraphQL API design patterns                   |
-| `verification-loop`             | Pre-PR quality gate (build → types → lint → tests) |
-| `agentic-engineering`           | AI-native engineering patterns                     |
-| `autonomous-loops`              | Loop patterns adapted for Copilot + GitHub Actions |
-| `continuous-agent-loop`         | Canonical Copilot loop skill                       |
-| `ralphinho-rfc-pipeline`        | RFC-driven DAG for large features                  |
-| `plankton-code-quality`         | Quality enforcement via lefthook                   |
-| `architecture-decision-records` | ADR templates and workflow                         |
-| `git-workflow`                  | Branch strategy, PR workflow, commit conventions   |
+| `tdd-workflow` | Red → Green → Refactor with examples and mock patterns |
+| `blueprint` | Multi-session feature planning with adversarial review |
+| `api-design` | REST/GraphQL patterns with multi-language examples |
+| `verification-loop` | Pre-PR quality gate (build → types → lint → tests → coverage) |
+| `agentic-engineering` | Model routing, eval-gated steps, AI-native patterns |
+| `autonomous-loops` | Sequential, continuous-PR, and multi-agent DAG patterns |
+| `continuous-agent-loop` | Failure-mode handling for agent loops |
+| `ralphinho-rfc-pipeline` | RFC-driven DAG for large features (>3 PRs) |
+| `plankton-code-quality` | Auto-formatting, linting, AI-powered fixes |
+| `architecture-decision-records` | ADR templates and lifecycle |
+| `git-workflow` | Branch strategy, PR templates, commit conventions |
+| `scaffold-generator` | Meta-skill: scans codebase → generates scaffolding skills |
+| `runbook-generator` | Meta-skill: scans error handling → generates debugging runbooks |
+
+**Pipeline Artifacts (`.github/pipeline-artifacts/`)**
+
+```
+pipeline-artifacts/
+├── learnings/           # Cross-session knowledge (8 topic files)
+│   ├── architecture.md, backend.md, code-quality.md, frontend.md
+│   ├── general.md, performance.md, security.md, testing.md
+└── sessions/            # Per-run artifacts + agent-log.jsonl
+```
+
+Every agent self-reports via JSONL events. Memory auto-progresses: Markdown → JSONL (>200 lines) → Vector DB (>500 entries).
 
 **Git hooks (`lefthook.yml`)**
 6 hooks covering the critical ECC automations — see [Section 6](#6-the-irreducible-gaps).
@@ -266,12 +286,21 @@ End:       /share → extract patterns → update instructions
 
 ### Pattern 2: Model Routing
 
-| Task                      | Model                             |
-| ------------------------- | --------------------------------- |
-| File search, simple edits | Haiku (fast, cheap)               |
-| Multi-file implementation | Sonnet (best balance)             |
-| Complex architecture      | Opus (deep reasoning)             |
-| Security analysis         | Opus (can't miss vulnerabilities) |
+See `.github/instructions/model-selection.instructions.md` for the full matrix. Quick reference:
+
+| Task Type | Recommended Model | Cost Tier |
+|-----------|------------------|----------|
+| Orchestration / Planning | Claude Opus 4.6 | Premium (3x) |
+| Code Generation | Claude Sonnet 4.5 / GPT-5.3-Codex | Standard (1x) |
+| Code Review | Multi-model parallel (3–5 models) | Mixed |
+| Quick Fixes / Build Errors | Claude Haiku 4.5 / GPT-5 mini | Economy/Free |
+| Test Writing | Claude Sonnet 4 / GPT-5.2 | Standard (1x) |
+| Documentation | GPT-5.4 mini / GPT-5 mini | Economy/Free |
+| Security Review | Claude Opus 4.6 / Claude Sonnet 4.5 | Premium/Standard |
+| Data Analysis | Gemini 3.1 Pro / Gemini 2.5 Pro | Standard (1x) |
+| Fast Triage | Grok Code Fast 1 / GPT-4.1 | Budget/Free |
+
+Supports all GitHub Copilot models across **Anthropic, OpenAI, Google, and xAI**. Plan-based fallback: tries recommended → drops tier if unavailable.
 
 ### Pattern 3: Context Window Discipline
 
