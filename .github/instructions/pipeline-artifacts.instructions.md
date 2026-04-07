@@ -1,10 +1,14 @@
 ---
-applyTo: ".github/agents/**"
+applyTo: "**"
 ---
 
 # Pipeline Artifact & Learning Protocol
 
 Every agent in the pipeline MUST follow this protocol to collect artifacts and improve over time.
+
+> **Important**: Subagents spawned via `runSubagent` do NOT automatically receive these instructions.
+> The orchestrator (architect) MUST embed the artifact and logging requirements into every subagent prompt.
+> See the "Subagent Prompt Template" section below for the required boilerplate.
 
 ## Directory Structure
 
@@ -143,6 +147,73 @@ When appending to `learnings/*.md`:
 - Create the session folder at pipeline start: `.github/pipeline-artifacts/sessions/<YYYY-MM-DD-task-slug>/`
 - Write `00-scope.md` as your first artifact
 - After pipeline completes, write a final summary appended to the session folder
+
+## Subagent Prompt Template (MANDATORY for orchestrator)
+
+When the orchestrator dispatches a subagent via `runSubagent`, it MUST append the following block to the prompt. Replace placeholders with actual values.
+
+````
+## Artifact Protocol (MANDATORY)
+
+You are running as part of a pipeline. You MUST write artifacts before returning.
+
+**Session folder**: `.github/pipeline-artifacts/sessions/{{SESSION_FOLDER}}/`
+**Your artifact file**: `{{STAGE}}-{{AGENT_NAME}}.md`
+**Log file**: `.github/pipeline-artifacts/sessions/{{SESSION_FOLDER}}/agent-log.jsonl`
+
+### Step 1: Log your start
+Append this line to the log file (create if it doesn't exist):
+```json
+{"event":"start","agent":"{{AGENT_NAME}}","stage":{{STAGE_NUMBER}},"model":"{{MODEL}}","timestamp":"{{ISO_TIMESTAMP}}","task":"{{TASK_SUMMARY}}"}
+```
+
+### Step 2: Do your work
+Complete the task described above.
+
+### Step 3: Write your artifact
+Create the file `.github/pipeline-artifacts/sessions/{{SESSION_FOLDER}}/{{STAGE}}-{{AGENT_NAME}}.md` with this format:
+```markdown
+# {{AGENT_NAME}} — {{TASK_SUMMARY}}
+
+**Session**: {{SESSION_FOLDER}}
+**Date**: {{DATE}}
+**Agent**: {{AGENT_NAME}}
+**Stage**: {{STAGE_NUMBER}}
+**Status**: PASS | FAIL | BLOCKED
+
+## Summary
+<2-3 sentence summary>
+
+## Changes
+- <file>: <what changed>
+
+## Findings
+- <issues, risks, decisions>
+```
+
+### Step 4: Log your end
+Append this line to the log file:
+```json
+{"event":"end","agent":"{{AGENT_NAME}}","stage":{{STAGE_NUMBER}},"status":"PASS|FAIL|BLOCKED","timestamp":"{{ISO_TIMESTAMP}}","tool_calls":{{COUNT}},"findings":{{COUNT}}}
+```
+
+### Step 5: Return your status
+Your final message MUST start with `STATUS: PASS`, `STATUS: FAIL`, or `STATUS: BLOCKED` so the orchestrator can parse your result programmatically.
+````
+
+### Orchestrator self-artifact checklist
+
+Before dispatching any subagent, the orchestrator MUST have already:
+
+1. Created the session folder (use `create_file` or `run_in_terminal mkdir -p`)
+2. Written `00-scope.md` into the session folder
+3. Appended its own `start` log entry to `agent-log.jsonl`
+
+After all stages complete, the orchestrator MUST:
+
+1. Append its own `end` log entry
+2. Invoke `session-reporter` with the session folder path in the prompt
+3. Print the session summary to the user
 
 ## Memory Storage Progression
 

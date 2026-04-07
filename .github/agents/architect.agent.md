@@ -78,13 +78,26 @@ After scoping but before dispatching, produce:
 
 Follow `.github/instructions/pipeline-artifacts.instructions.md` for the full protocol.
 
-**As orchestrator, you MUST:**
+**As orchestrator, you MUST perform these steps in order — no exceptions:**
 
-1. At pipeline start: create session folder `.github/pipeline-artifacts/sessions/<YYYY-MM-DD-task-slug>/`
-2. Write `00-scope.md` as your first artifact
-3. Read `.github/pipeline-artifacts/learnings/architecture.md` before making design decisions
-4. After pipeline completes: append summary to the session folder
-5. Instruct each dispatched agent to read their relevant learnings and write their stage artifact
+### At pipeline start (BEFORE any subagent dispatch):
+
+1. **Create session folder**: `.github/pipeline-artifacts/sessions/<YYYY-MM-DD-task-slug>/`
+2. **Write `00-scope.md`** into the session folder using the artifact format
+3. **Create `agent-log.jsonl`** in the session folder with your own `start` entry
+4. **Read learnings**: Check `.github/pipeline-artifacts/learnings/architecture.md` before design decisions
+
+### When dispatching each subagent:
+
+5. **Embed the Subagent Prompt Template** from `pipeline-artifacts.instructions.md` into every `runSubagent` prompt — subagents do NOT automatically receive artifact instructions
+6. **Fill in all placeholders**: session folder, stage number, agent name, timestamp
+7. **Parse the subagent's return** for `STATUS: PASS|FAIL|BLOCKED` at the start of its response
+
+### After all stages complete:
+
+8. **Write final summary** to `99-session-summary.md` in the session folder (or invoke `session-reporter`)
+9. **Append your own `end`** log entry to `agent-log.jsonl`
+10. **Print the session summary** to the user — including: agents dispatched, stages completed, pass/fail results, total changes, and any learnings extracted
 
 ## Handoff
 
