@@ -290,7 +290,8 @@ User Request
 6. All development agents must enforce TDD workflow.
 7. All review/QA agents must output a structured PASS/FAIL verdict.
 8. **Every agent** must include an `## Artifact & Learning Protocol` section referencing `.github/instructions/pipeline-artifacts.instructions.md` with instructions to: read learnings before starting, write artifacts after completing, extract new learnings.
-9. All development agents use `tools: [read, edit, execute, search]`. Gate agents (review, QA) also get `edit` to write artifacts.
-10. `ai-ml` and `rag-embedding` additionally get `web` for external API/docs access.
+9. **Every agent** must log its invocation by appending `start` and `end` JSONL events to `agent-log.jsonl` in the session folder (see the "Invocation Logging" section in `pipeline-artifacts.instructions.md`). This is the primary data source for the session-reporter.
+10. All development agents use `tools: [read, edit, execute, search]`. Gate agents (review, QA) also get `edit` to write artifacts and log entries.
+11. `ai-ml` and `rag-embedding` additionally get `web` for external API/docs access.
 
 Generate all agents now.

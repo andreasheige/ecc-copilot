@@ -18,10 +18,11 @@ You compile the end-of-session summary report. You read all artifacts from the c
 ## Workflow
 
 1. **Find the session folder** — Read `.github/pipeline-artifacts/sessions/` to find the most recent (or specified) session folder.
-2. **Read all artifacts** — Read every `*.md` file in the session folder.
-3. **Extract metadata** — From each artifact, extract: Agent, Model, Stage, Status, Started, Finished, Duration, Tool calls.
-4. **Compute totals** — Total duration, total tool calls, pass/fail counts, model distribution.
-5. **Estimate cost tier** — Based on model usage:
+2. **Read the invocation log** — Read `agent-log.jsonl` from the session folder. This is your **primary data source** — it contains structured `start`/`end` events with timestamps, models, tool call counts, and status for every agent.
+3. **Parse the log** — Match `start` and `end` events by agent name. Compute duration from timestamp pairs. Sum tool calls, count pass/fail.
+4. **Read artifacts for extras** — Scan individual `*.md` artifacts in the session folder for any additional context (findings, learnings, changes) not captured in the log.
+5. **Compute totals** — Total duration, total tool calls, pass/fail counts, model distribution, estimated cost.
+6. **Estimate cost tier** — Based on model usage:
    - Opus 4.6 calls = premium tier (high cost)
    - Sonnet 4.5 calls = standard tier (medium cost)
    - Sonnet 4 calls = standard tier (lower cost)
@@ -104,10 +105,14 @@ Write this to `99-session-summary.md` AND display to the user:
 
 ## Handling Missing Data
 
-If an artifact doesn't have all fields (e.g. no timing, no tool call count):
-- Mark as `—` in the table
-- Add a note: "Some agents did not report full metrics"
+If an agent did not write to `agent-log.jsonl` but has an artifact `*.md`:
+- Parse the artifact for metadata fields (Agent, Model, Stage, Status, Duration, Tool calls)
+- Mark timing as `—` if no timestamps available
+- Add a note: "⚠ Agent did not log to agent-log.jsonl — metrics parsed from artifact"
 - Still include them in the count
+
+If an agent has neither a log entry nor an artifact:
+- It won't appear in the report (this is expected for agents that weren't invoked)
 
 ## Artifact & Learning Protocol
 
