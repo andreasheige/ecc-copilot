@@ -78,6 +78,7 @@ After scoping but before dispatching, produce:
 Follow `.github/instructions/pipeline-artifacts.instructions.md` for the full protocol.
 
 **As orchestrator, you MUST:**
+
 1. At pipeline start: create session folder `.github/pipeline-artifacts/sessions/<YYYY-MM-DD-task-slug>/`
 2. Write `00-scope.md` as your first artifact
 3. Read `.github/pipeline-artifacts/learnings/architecture.md` before making design decisions

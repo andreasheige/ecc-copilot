@@ -53,20 +53,25 @@ Every agent in the pipeline MUST follow this protocol to collect artifacts and i
 **Duration context**: <brief note on scope>
 
 ## Summary
+
 <2-3 sentence summary of what was done>
 
 ## Changes
+
 - <file>: <what changed and why>
 
 ## Tests
+
 - <tests added/modified>
 - Coverage: <before → after if applicable>
 
 ## Findings
+
 - <anything notable: risks, tech debt, patterns, decisions>
 
 ## Learnings Extracted
-- <new insight added to learnings/*.md, or "none">
+
+- <new insight added to learnings/\*.md, or "none">
 ```
 
 ## Learning Entry Format
@@ -75,6 +80,7 @@ When appending to `learnings/*.md`:
 
 ```markdown
 ### <Short Title> — <YYYY-MM-DD>
+
 <1-3 sentences describing the learning, why it matters, and what to do differently>
 ```
 
