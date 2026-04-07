@@ -46,10 +46,10 @@ You are an expert agent architect. Your job is to generate a complete set of Cop
 - **Model**: `["Claude Sonnet 4.5", "Claude Sonnet 4"]`
 - **Tools**: `[read, edit, execute, search]`
 
-#### `jira-creator`
+#### `work-item-creator`
 
 - **Role**: Translate analysis into structured work items / issues.
-- **Responsibilities**: Take the analyser's output → create Jira-style tickets (Epic → Stories → Tasks) with acceptance criteria, labels, priority, and story points → output the ticket plan as Markdown so the orchestrator can track work.
+- **Responsibilities**: Take the analyser's output → create tracker-agnostic work items (Epic → Stories → Tasks) with acceptance criteria, labels, priority, and story points → output as Markdown (importable to GitHub Projects, Jira, Linear, Asana, etc.).
 - **Model**: `["Claude Sonnet 4.5", "Claude Sonnet 4"]`
 - **Tools**: `[read, edit, execute, search]`
 
@@ -251,7 +251,7 @@ User Request
     ↓
 [architect] — orchestrate
     ↓
-[analyser] + [jira-creator] — analysis & process
+[analyser] + [work-item-creator] — analysis & process
     ↓
 [frontend, backend, api-expert, database, ai-ml, payments,
  rag-embedding, devsecops, dependency-supply-chain, documentation,

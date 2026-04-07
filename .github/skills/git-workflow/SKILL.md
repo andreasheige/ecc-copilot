@@ -348,7 +348,7 @@ git rebase origin/main
 ```
 # Feature branches
 feature/user-authentication
-feature/JIRA-123-payment-integration
+feature/GH-123-payment-integration
 
 # Bug fixes
 fix/login-redirect-loop

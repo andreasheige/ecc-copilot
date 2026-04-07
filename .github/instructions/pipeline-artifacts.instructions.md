@@ -14,7 +14,7 @@ Every agent in the pipeline MUST follow this protocol to collect artifacts and i
     <YYYY-MM-DD-task-slug>/     # One folder per pipeline run
       00-scope.md                # architect output
       01-analysis.md             # analyser output
-      01-work-items.md           # jira-creator output
+      01-work-items.md           # work-item-creator output
       02-<agent-name>.md         # each dev agent's report
       03-code-quality.md         # review gate
       03-security.md             # review gate

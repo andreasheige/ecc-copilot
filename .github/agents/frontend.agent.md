@@ -84,7 +84,7 @@ Follow `.github/instructions/pipeline-artifacts.instructions.md` for the full pr
 
 ## Handoff
 
-**Receives from**: `architect` (scoped file list + acceptance criteria from jira-creator)
+**Receives from**: `architect` (scoped file list + acceptance criteria from work-item-creator)
 **Outputs to**: `architect` (completion report)
 **Runs in parallel with**: other Stage 2 agents on non-overlapping files
 **Blocks on failure**: report BLOCKED with reason if scope is ambiguous or conflicting

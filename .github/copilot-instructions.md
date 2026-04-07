@@ -9,7 +9,7 @@ This project uses a full multi-stage agent pipeline. See `.github/agents/` for a
 | Stage | Agents | Trigger |
 |-------|--------|---------|
 | 0 — Orchestration | `architect` | Every non-trivial task |
-| 1 — Analysis | `analyser`, `jira-creator` | After architect scopes the work |
+| 1 — Analysis | `analyser`, `work-item-creator` | After architect scopes the work |
 | 2 — Development (parallel) | `frontend`, `backend`, `api-expert`, `database`, `ai-ml`, `payments`, `rag-embedding`, `devsecops`, `dependency-supply-chain`, `documentation`, `test-automation`, `search-discovery`, `localization`, `analytics-data-layer`, `compliance-gdpr`, `notification-comms` | Parallel after analysis |
 | 3 — Review (both must PASS) | `code-quality-reviewer`, `security-reviewer` | After all dev agents complete |
 | 4 — QA (all must PASS) | `qa-functional`, `qa-integration-e2e`, `qa-performance`, `qa-automation-runner`, `contract-testing` | After review gates pass |

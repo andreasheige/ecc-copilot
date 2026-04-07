@@ -73,5 +73,5 @@ Follow `.github/instructions/pipeline-artifacts.instructions.md` for the full pr
 ## Handoff
 
 **Receives from**: `architect` (task description + scoped context)
-**Outputs to**: `architect` (impact report) and `jira-creator` (for work breakdown)
+**Outputs to**: `architect` (impact report) and `work-item-creator` (for work breakdown)
 **Blocks on failure**: if impact surface cannot be determined, escalate to architect with list of unknowns
