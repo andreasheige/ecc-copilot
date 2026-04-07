@@ -26,6 +26,17 @@ See `.github/instructions/ecc-core.instructions.md` for the full behavioral rule
 - **Security mandatory**: invoke `security-reviewer` for auth/payments/PII/endpoints
 - **Verify before PR**: run `verification-loop` skill before every PR
 
+## Agent Invocation Logging
+
+Every agent MUST self-report by appending JSONL events to the session log:
+
+**Log file**: `.github/pipeline-artifacts/sessions/<session>/agent-log.jsonl`
+
+- **On start**: `{"event":"start","agent":"<name>","stage":<N>,"model":"<model>","timestamp":"<ISO-8601>","task":"<summary>"}`
+- **On end**: `{"event":"end","agent":"<name>","stage":<N>,"status":"PASS|FAIL|BLOCKED","timestamp":"<ISO-8601>","tool_calls":<count>,"findings":<count>}`
+
+This is the primary data source for the `session-reporter`. Full spec in `.github/instructions/pipeline-artifacts.instructions.md`.
+
 ## Session Habits
 
 | When | Action |
