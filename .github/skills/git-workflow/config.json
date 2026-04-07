@@ -1,0 +1,14 @@
+{
+  "mainBranch": "main",
+  "branchPrefix": {
+    "feature": "feature/",
+    "fix": "fix/",
+    "hotfix": "hotfix/",
+    "docs": "docs/",
+    "chore": "chore/"
+  },
+  "commitConvention": "conventional",
+  "requirePRReview": true,
+  "squashOnMerge": true,
+  "protectedBranches": ["main", "develop"]
+}

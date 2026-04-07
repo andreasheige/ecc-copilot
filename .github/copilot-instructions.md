@@ -63,3 +63,5 @@ Load by name: "load the `<skill>` skill"
 | Git/PR workflow | `git-workflow` |
 | Pre-PR quality gate | `verification-loop` |
 | AI-native engineering | `agentic-engineering` |
+| Generate scaffolding skills | `scaffold-generator` |
+| Generate debugging runbooks | `runbook-generator` |

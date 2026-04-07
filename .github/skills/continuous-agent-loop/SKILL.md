@@ -1,6 +1,10 @@
 ---
 name: continuous-agent-loop
-description: Patterns for continuous autonomous agent loops with quality gates, evals, and recovery controls.
+description: >-
+  Use when running agents in a continuous loop with quality gates, recovering
+  from loop failures (churn, repeated retries, merge queue stalls, cost drift),
+  or combining multiple loop patterns. Complements autonomous-loops skill with
+  failure-mode handling. DO NOT USE for single-run pipeline tasks.
 ---
 
 # Continuous Agent Loop
@@ -29,7 +33,7 @@ Recommended production stack:
 3. eval loop (`eval-harness`)
 4. session persistence (`nanoclaw-repl`)
 
-## Failure Modes
+## Gotchas
 
 - loop churn without measurable progress
 - repeated retries with same root cause

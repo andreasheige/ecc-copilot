@@ -1,0 +1,15 @@
+{
+  "hookRunner": "lefthook",
+  "formatter": "biome",
+  "linters": {
+    "typescript": "eslint",
+    "css": "stylelint"
+  },
+  "protectedConfigs": [
+    "biome.json",
+    ".eslintrc.*",
+    "lefthook.yml"
+  ],
+  "autoFix": true,
+  "blockOnLintFailure": true
+}

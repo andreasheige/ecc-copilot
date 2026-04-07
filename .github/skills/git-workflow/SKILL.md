@@ -1,11 +1,19 @@
 ---
 name: git-workflow
-description: Git workflow patterns including branching strategies, commit conventions, merge vs rebase, conflict resolution, and collaborative development best practices for teams of all sizes.
+description: >-
+  Use when creating branches, writing commit messages, resolving merge
+  conflicts, choosing merge vs rebase, preparing PRs, managing releases,
+  or setting up git hooks. DO NOT USE for CI/CD pipeline configuration
+  (use devsecops) or deployment procedures (use devsecops-deploy agent).
 ---
 
 # Git Workflow Patterns
 
 Best practices for Git version control, branching strategies, and collaborative development.
+
+## Setup
+
+Check `config.json` for project-specific settings (branch naming, commit convention, protected branches). If `config.json` is missing or incomplete, ask the user to configure it before enforcing conventions.
 
 ## When to Activate
 
@@ -133,19 +141,10 @@ Closes #123"
 
 ### Commit Message Template
 
-Create `.gitmessage` in repo root:
-
+Use `templates/gitmessage` — copy to repo root and enable with:
+```bash
+git config commit.template .gitmessage
 ```
-# <type>(<scope>): <subject>
-# # Types: feat, fix, docs, style, refactor, test, chore, perf, ci, revert
-# Scope: api, ui, db, auth, etc.
-# Subject: imperative mood, no period, max 50 chars
-#
-# [optional body] - explain why, not what
-# [optional footer] - Breaking changes, closes #issue
-```
-
-Enable with: `git config commit.template .gitmessage`
 
 ## Merge vs Rebase
 
@@ -230,41 +229,7 @@ docs(api): add OpenAPI specification for v2 endpoints
 
 ### PR Description Template
 
-```markdown
-## What
-
-Brief description of what this PR does.
-
-## Why
-
-Explain the motivation and context.
-
-## How
-
-Key implementation details worth highlighting.
-
-## Testing
-
-- [ ] Unit tests added/updated
-- [ ] Integration tests added/updated
-- [ ] Manual testing performed
-
-## Screenshots (if applicable)
-
-Before/after screenshots for UI changes.
-
-## Checklist
-
-- [ ] Code follows project style guidelines
-- [ ] Self-review completed
-- [ ] Comments added for complex logic
-- [ ] Documentation updated
-- [ ] No new warnings introduced
-- [ ] Tests pass locally
-- [ ] Related issues linked
-
-Closes #123
-```
+Use `templates/pull-request.md` as the starting point for PR descriptions.
 
 ### Code Review Checklist
 
@@ -593,30 +558,6 @@ git merge upstream/main
 git push origin main
 ```
 
-### Undoing Mistakes
-
-```bash
-# Undo last commit (keep changes)
-git reset --soft HEAD~1
-
-# Undo last commit (discard changes)
-git reset --hard HEAD~1
-
-# Undo last commit pushed to remote
-git revert HEAD
-git push origin main
-
-# Undo specific file changes
-git checkout HEAD -- path/to/file
-
-# Fix last commit message
-git commit --amend -m "New message"
-
-# Add forgotten file to last commit
-git add forgotten-file
-git commit --amend --no-edit
-```
-
 ## Git Hooks
 
 ### Pre-Commit Hook
@@ -654,7 +595,7 @@ if git diff origin/main | grep -E 'console\.log'; then
 fi
 ```
 
-## Anti-Patterns
+## Gotchas
 
 ```
 # BAD: Committing directly to main
@@ -696,19 +637,4 @@ git add node_modules/
 
 ## Quick Reference
 
-| Task | Command |
-|------|---------|
-| Create branch | `git checkout -b feature/name` |
-| Switch branch | `git checkout branch-name` |
-| Delete branch | `git branch -d branch-name` |
-| Merge branch | `git merge branch-name` |
-| Rebase branch | `git rebase main` |
-| View history | `git log --oneline --graph` |
-| View changes | `git diff` |
-| Stage changes | `git add .` or `git add -p` |
-| Commit | `git commit -m "message"` |
-| Push | `git push origin branch-name` |
-| Pull | `git pull origin branch-name` |
-| Stash | `git stash push -m "message"` |
-| Undo last commit | `git reset --soft HEAD~1` |
-| Revert commit | `git revert HEAD` |
+See `references/quick-reference.md` for the full command table and undo-mistakes cheat sheet.

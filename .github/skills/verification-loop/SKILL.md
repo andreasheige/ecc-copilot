@@ -1,6 +1,10 @@
 ---
 name: verification-loop
-description: "A comprehensive verification system for Copilot sessions."
+description: >-
+  Use before every PR, commit, or merge to verify build passes, types
+  check clean, lint has zero warnings, tests pass with 80%+ coverage,
+  and no security issues. Run after completing any code change. DO NOT
+  USE as a substitute for manual code review (use code-reviewer agent).
 ---
 
 # Verification Loop Skill
@@ -123,3 +127,18 @@ Run: /verify
 
 This skill complements git hooks via lefthook but provides deeper verification.
 Hooks catch issues immediately; this skill provides comprehensive review.
+
+## Run History
+
+After each verification run, append a line to `history/runs.jsonl`:
+
+```json
+{"date":"YYYY-MM-DD","result":"PASS|FAIL","build":true,"types":true,"lint":true,"tests":true,"coverage":82,"security":true,"issues_found":0}
+```
+
+On the next run, read `history/runs.jsonl` to detect patterns:
+- Repeated lint failures → suggest adding a pre-commit hook
+- Coverage trending down → flag before it drops below 80%
+- Same test failing across runs → likely flaky test, investigate
+
+If `history/` does not exist, create it on first run.

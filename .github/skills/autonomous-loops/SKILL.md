@@ -1,6 +1,10 @@
 ---
 name: autonomous-loops
-description: "Patterns and architectures for autonomous GitHub Copilot loops — from simple sequential pipelines to RFC-driven multi-agent DAG systems."
+description: >-
+  Use when setting up autonomous agent loops, choosing between sequential
+  pipelines and multi-agent DAGs, configuring GitHub Actions for continuous
+  agent work, or debugging loop failures (churn, cost drift, stalled queues).
+  DO NOT USE for one-shot tasks or manual interactive sessions.
 ---
 
 # Autonomous Loops Skill
@@ -582,7 +586,7 @@ These patterns compose well:
 
 ---
 
-## Anti-Patterns
+## Gotchas
 
 ### Common Mistakes
 

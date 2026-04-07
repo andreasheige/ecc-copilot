@@ -1,6 +1,10 @@
 ---
 name: agentic-engineering
-description: Operate as an agentic engineer using eval-first execution, decomposition, and cost-aware model routing.
+description: >-
+  Use when executing multi-step autonomous tasks, choosing which model to route
+  subtasks to, or decomposing complex work into eval-gated steps. Also use when
+  reviewing AI-generated code for correctness vs style. DO NOT USE for simple
+  single-file edits or conversational Q&A.
 ---
 
 # Agentic Engineering
@@ -40,7 +44,7 @@ Apply the 15-minute unit rule:
 - Start fresh session after major phase transitions.
 - Compact after milestone completion, not during active debugging.
 
-## Review Focus for AI-Generated Code
+## Gotchas
 
 Prioritize:
 - invariants and edge cases

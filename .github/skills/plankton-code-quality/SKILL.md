@@ -1,11 +1,20 @@
 ---
 name: plankton-code-quality
-description: "Write-time code quality enforcement using Plankton — auto-formatting, linting, and AI-powered fixes on every file edit via git hooks."
+description: >-
+  Use when setting up or configuring Plankton code quality hooks
+  (auto-formatting, linting, AI-powered fixes), debugging hook failures,
+  resolving conflicts between Plankton and other formatters, or protecting
+  linter configs from rule-gaming. DO NOT USE for manual code review (use
+  code-quality-reviewer agent) or test coverage (use tdd-workflow).
 ---
 
 # Plankton Code Quality Skill
 
 Integration reference for Plankton (credit: @alxfazio), a write-time code quality enforcement system for GitHub Copilot. Plankton runs formatters and linters on every file edit via git hooks (lefthook equivalent), then runs linter commands directly to fix violations the agent didn't catch.
+
+## Setup
+
+Check `config.json` for project-specific settings (hook runner, formatter, linter choices, protected configs). If `config.json` is missing, ask the user which tools their project uses before configuring hooks.
 
 ## When to Use
 
